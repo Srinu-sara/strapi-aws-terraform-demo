@@ -1,5 +1,3 @@
-# strapi-aws-terraform-demo
-Infrastructure as Code for Strapi CMS on AWS
 # Strapi CMS Deployment on AWS (Terraform)
 
 This project creates a cloud server on AWS and installs the Strapi Headless CMS.
