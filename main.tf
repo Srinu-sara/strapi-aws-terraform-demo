@@ -2,10 +2,10 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# --- 1. Get the latest Ubuntu Image (Required!) ---
+# --- 1. Get the latest Ubuntu Image ---
 data "aws_ami" "ubuntu" {
   most_recent = true
-  owners      = ["099720109477"] # Canonical
+  owners      = ["099720109477"] 
 
   filter {
     name   = "name"
@@ -23,7 +23,7 @@ resource "aws_security_group" "strapi_sg" {
   name        = "strapi-interview-sg"
   description = "Allow SSH and HTTP traffic"
 
-  # Allow Strapi (1337)
+  # Allow Strapi (1337)   
   ingress {
     from_port   = 1337
     to_port     = 1337
@@ -54,15 +54,14 @@ resource "aws_instance" "strapi_server" {
   instance_type = "t2.medium"
   vpc_security_group_ids = [aws_security_group.strapi_sg.id]
 
-  # --- CRITICAL: Attach the key you created in AWS Console ---
+
   key_name = "strapi-key" 
 
   tags = {
     Name = "Strapi-Interview-Demo"
   }
 
-  # Note: I REMOVED the user_data script.
-  # We will install Strapi manually via SSH to make sure it works.
+
 }
 
 # --- 4. Outputs ---
@@ -72,4 +71,5 @@ output "strapi_url" {
 
 output "ssh_command" {
   value = "ssh -i strapi-key.pem ubuntu@${aws_instance.strapi_server.public_ip}"
+
 }
